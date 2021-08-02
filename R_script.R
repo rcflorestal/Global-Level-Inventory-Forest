@@ -226,8 +226,8 @@ class <- vector()   ## Sets the class center vector
 class2 <- vector()  ## Sets the class range vector
 
 # Define the limits of DBH
-classMin <- round(min(FI$DBH), 0)  # Sets Minimum diameter
-classMax <- 900                    # Sets Maximum diameter
+classMin <- trunc(min(FI$DBH))     # Sets Minimum diameter
+classMax <- round(max(FI$DBH),-2)  # Sets Maximum diameter
 classAmp <- 10                     # Sets Class width
 nClasses <- (classMax - classMin) / classAmp # Number of diameter classes
 
