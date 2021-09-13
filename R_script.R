@@ -18,16 +18,16 @@
 graphics.off()
 
 # Load packages
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 library(tidyr)
 library(stringr)
 library(ggplot2)
 library(hrbrthemes)
 library(ggalt)
-library(DT)
+library(DT, warn.conflicts = FALSE)
 library(jpeg)
 library(lattice)
-library(plotly)
+library(plotly, warn.conflicts = FALSE)
 library(sjmisc)
 library(leaflet)
 
@@ -60,7 +60,7 @@ infra <- read.csv2(
 # Show variables of infrastructure
 as_tibble(infra)
 
-#------------------------------Exploratory Data--------------------------------#
+#---------------------------Exploratory Data Analysis--------------------------#
 summary(FI[c(6:11)])  ## Summary Statics
 
 
@@ -227,7 +227,7 @@ class2 <- vector()  ## Sets the class range vector
 
 # Define the limits of DBH
 classMin <- trunc(min(FI$DBH))     # Sets Minimum diameter
-classMax <- round(max(FI$DBH),-2)  # Sets Maximum diameter
+classMax <- round(max(FI$DBH), -20)  # Sets Maximum diameter
 classAmp <- 10                     # Sets Class width
 nClasses <- (classMax - classMin) / classAmp # Number of diameter classes
 
@@ -303,7 +303,8 @@ write.csv2(
 #--------------Join the FI with the list of endangered species-----------------#
 FI_port <- FI %>%
         left_join(port, by = 'Scientific_Name') %>% ## endangered species
-        left_join(infra, by = 'UT')                 ## infrastructure
+        left_join(infra, by = 'UT') %>%             ## infrastructure
+        distinct(N, .keep_all = TRUE)
         
         
 # NA values replaced by "Nao Protegida"
